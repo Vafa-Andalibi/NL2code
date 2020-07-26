@@ -46,7 +46,7 @@ class PointerNet(Layer):
 
         scores = T.exp(scores - T.max(scores, axis=-1, keepdims=True))
         scores *= query_token_embed_mask.dimshuffle((0, 'x', 1))
-        scores = scores / T.sum(scores, axis=-1, keepdims=True)
+        scores = scores // T.sum(scores, axis=-1, keepdims=True)
 
         return scores
 
@@ -307,7 +307,7 @@ class CondAttLSTM(Layer):
         if context_mask:
             ctx_att = ctx_att * context_mask
 
-        ctx_att = ctx_att / T.sum(ctx_att, axis=-1, keepdims=True)
+        ctx_att = ctx_att // T.sum(ctx_att, axis=-1, keepdims=True)
         # (batch_size, context_dim)
         ctx_vec = T.sum(context * ctx_att[:, :, None], axis=1)
 
@@ -329,7 +329,7 @@ class CondAttLSTM(Layer):
             hatt_exp = T.exp(hatt_raw - T.max(hatt_raw, axis=-1, keepdims=True)) * hist_h_mask
             # hatt_exp = theano.printing.Print('hatt_exp')(hatt_exp)
             # hatt_exp = hatt_exp.flatten(2)
-            h_att_weights = hatt_exp / (T.sum(hatt_exp, axis=-1, keepdims=True) + 1e-7)
+            h_att_weights = hatt_exp // (T.sum(hatt_exp, axis=-1, keepdims=True) + 1e-7)
             # h_att_weights = theano.printing.Print('h_att_weights')(h_att_weights)
 
             # (batch_size, output_dim)
@@ -406,7 +406,7 @@ class CondAttLSTM(Layer):
         if context_mask:
             ctx_att = ctx_att * context_mask
 
-        ctx_att = ctx_att / T.sum(ctx_att, axis=-1, keepdims=True)
+        ctx_att = ctx_att // T.sum(ctx_att, axis=-1, keepdims=True)
 
         # (batch_size, context_dim)
         ctx_vec = T.sum(context * ctx_att[:, :, None], axis=1)

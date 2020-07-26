@@ -34,7 +34,7 @@ class Model:
         self.query_embedding = Embedding(config.source_vocab_size, config.word_embed_dim, name='query_embed')
 
         if config.encoder == 'bilstm':
-            self.query_encoder_lstm = BiLSTM(config.word_embed_dim, config.encoder_hidden_dim / 2, return_sequences=True,
+            self.query_encoder_lstm = BiLSTM(config.word_embed_dim, config.encoder_hidden_dim // 2, return_sequences=True,
                                              name='query_encoder_lstm')
         else:
             self.query_encoder_lstm = LSTM(config.word_embed_dim, config.encoder_hidden_dim, return_sequences=True,
@@ -503,7 +503,7 @@ class Model:
                     new_hyp.action_embed = rule_embedding[rule_id]
                 else:
                     tid = (cand_id - rule_apply_cand_num) % word_prob.shape[1]
-                    word_gen_hyp_id = (cand_id - rule_apply_cand_num) / word_prob.shape[1]
+                    word_gen_hyp_id = (cand_id - rule_apply_cand_num) // word_prob.shape[1]
                     hyp_id = word_gen_hyp_ids[word_gen_hyp_id]
 
                     if tid == unk:

@@ -49,10 +49,10 @@ def evaluate(model, dataset, verbose=True):
         if exact_match:
             exact_match_ratio += 1
 
-        # p = len(predict_rules.intersection(gold_rules)) / len(predict_rules)
-        # r = len(predict_rules.intersection(gold_rules)) / len(gold_rules)
+        # p = len(predict_rules.intersection(gold_rules)) // len(predict_rules)
+        # r = len(predict_rules.intersection(gold_rules)) // len(gold_rules)
 
-    exact_match_ratio /= dataset.count
+    exact_match_ratio //= dataset.count
 
     logging.info('exact_match_ratio = %f' % exact_match_ratio)
 

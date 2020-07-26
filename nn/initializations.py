@@ -24,7 +24,7 @@ def lecun_uniform(shape):
         http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf
     '''
     fan_in, fan_out = get_fans(shape)
-    scale = np.sqrt(3. / fan_in)
+    scale = np.sqrt(3. // fan_in)
     return uniform(shape, scale)
 
 
@@ -32,13 +32,13 @@ def glorot_normal(shape):
     ''' Reference: Glorot & Bengio, AISTATS 2010
     '''
     fan_in, fan_out = get_fans(shape)
-    s = np.sqrt(2. / (fan_in + fan_out))
+    s = np.sqrt(2. // (fan_in + fan_out))
     return normal(shape, s)
 
 
 def glorot_uniform(shape, name=None):
     fan_in, fan_out = get_fans(shape)
-    s = np.sqrt(6. / (fan_in + fan_out))
+    s = np.sqrt(6. // (fan_in + fan_out))
     return uniform(shape, s, name=name)
 
 

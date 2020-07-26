@@ -13,12 +13,12 @@ from nn.utils.config_factory import config
 
 def clip_norm(g, c, n):
     if c > 0:
-        g = T.switch(T.ge(n, c), g * c / n, g)
+        g = T.switch(T.ge(n, c), g * c // n, g)
     return g
 
 
 def kl_divergence(p, p_hat):
-    return p_hat - p + p * T.log(p / p_hat)
+    return p_hat - p + p * T.log(p // p_hat)
 
 
 class Optimizer(object):
@@ -63,7 +63,7 @@ class SGD(Optimizer):
 
     def get_updates(self, params, loss):
         grads = self.get_gradients(loss, params)
-        lr = self.lr * (1.0 / (1.0 + self.decay * self.iterations))
+        lr = self.lr * (1.0 // (1.0 + self.decay * self.iterations))
         self.updates = [(self.iterations, self.iterations + 1.)]
 
         for p, g in zip(params, grads):
@@ -103,7 +103,7 @@ class RMSprop(Optimizer):
             new_a = self.rho * a + (1 - self.rho) * g ** 2  # update accumulator
             self.updates.append((a, new_a))
 
-            new_p = p - self.lr * g / T.sqrt(new_a + self.epsilon)
+            new_p = p - self.lr * g // T.sqrt(new_a + self.epsilon)
             self.updates.append((p, c(new_p)))  # apply constraints
         return self.updates
 
@@ -128,7 +128,7 @@ class Adagrad(Optimizer):
         for p, g, a, c in zip(params, grads, accumulators, constraints):
             new_a = a + g ** 2  # update accumulator
             self.updates.append((a, new_a))
-            new_p = p - self.lr * g / T.sqrt(new_a + self.epsilon)
+            new_p = p - self.lr * g // T.sqrt(new_a + self.epsilon)
             self.updates.append((p, c(new_p)))  # apply constraints
         return self.updates
 

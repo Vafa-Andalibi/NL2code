@@ -484,7 +484,7 @@ class CondAttLSTM(Layer):
         if context_mask:
             ctx_att = ctx_att * context_mask
 
-        ctx_att = ctx_att / T.sum(ctx_att, axis=-1, keepdims=True)
+        ctx_att = ctx_att // T.sum(ctx_att, axis=-1, keepdims=True)
         # (batch_size, context_dim)
         ctx_vec = T.sum(context * ctx_att[:, :, None], axis=1)
 

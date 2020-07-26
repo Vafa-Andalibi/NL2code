@@ -91,7 +91,7 @@ class Learner(object):
 
                 if batch_index == 4:
                     elapsed = time.time() - begin_time
-                    eta = nb_train_sample / (cum_nb_examples / elapsed)
+                    eta = nb_train_sample // (cum_nb_examples // elapsed)
                     print(', eta %ds' % (eta))
                     sys.stdout.flush()
 
@@ -144,7 +144,7 @@ class Learner(object):
 
             logging.info('[Epoch %d] cumulative loss = %f, (took %ds)',
                          epoch,
-                         loss / cum_nb_examples,
+                         loss // cum_nb_examples,
                          time.time() - begin_time)
 
             if early_stop:
