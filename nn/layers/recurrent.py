@@ -246,7 +246,7 @@ class GRU_4BiRNN(Layer):
 class LSTM(Layer):
     def __init__(self, input_dim, output_dim,
                  init='glorot_uniform', inner_init='orthogonal', forget_bias_init='one',
-                 activation='tanh', inner_activation='sigmoid', return_sequences=False, name='LSTM'):
+                 activation='tanh', inner_activation='sigmoid', return_sequences=False, name='LSTM', **kwargs):
 
         super(LSTM, self).__init__()
 
