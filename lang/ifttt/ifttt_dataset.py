@@ -49,7 +49,7 @@ def analyze_ifttt_dataset():
             max_rule_num = len(rules)
             example_with_max_rule_num = idx
 
-    logging.info('avg. num. of rules: %f', rule_num // len(examples))
+    logging.info('avg. num. of rules: %f', rule_num / len(examples))
     logging.info('max_rule_num: %d', max_rule_num)
     logging.info('example_with_max_rule_num: %d', example_with_max_rule_num)
 

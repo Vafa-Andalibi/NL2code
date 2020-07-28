@@ -19,7 +19,7 @@ def mean_absolute_error(y_true, y_pred):
 
 
 def mean_absolute_percentage_error(y_true, y_pred):
-    return T.abs_((y_true - y_pred) // T.clip(T.abs_(y_true), epsilon, np.inf)).mean(axis=-1) * 100.
+    return T.abs_((y_true - y_pred) / T.clip(T.abs_(y_true), epsilon, np.inf)).mean(axis=-1) * 100.
 
 
 def mean_squared_logarithmic_error(y_true, y_pred):
@@ -39,7 +39,7 @@ def categorical_crossentropy(y_true, y_pred):
     '''
     y_pred = T.clip(y_pred, epsilon, 1.0 - epsilon)
     # scale preds so that the class probas of each sample sum to 1
-    y_pred //= y_pred.sum(axis=-1, keepdims=True)
+    y_pred /= y_pred.sum(axis=-1, keepdims=True)
     cce = T.nnet.categorical_crossentropy(y_pred, y_true)
     return cce
 
