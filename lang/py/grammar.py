@@ -28,7 +28,17 @@ PY_AST_NODE_FIELDS = {
             'type': ast.expr,
             'is_list': True,
             'is_optional': False
-        }
+        },
+        'returns': {
+            'type': ast.expr,
+            'is_list': True,
+            'is_optional': True
+        },
+        'type_comment': {
+            'type': str,
+            'is_list': False,
+            'is_optional': True
+        },
     },
     'ClassDef': {
         'name': {
@@ -38,6 +48,11 @@ PY_AST_NODE_FIELDS = {
         },
         'bases': {
             'type': ast.expr,
+            'is_list': True,
+            'is_optional': False
+        },
+        'keywords': {
+            'type': ast.keyword,
             'is_list': True,
             'is_optional': False
         },
@@ -76,6 +91,11 @@ PY_AST_NODE_FIELDS = {
             'type': ast.expr,
             'is_list': False,
             'is_optional': False
+        },
+        'type_comment': {
+            'type': str,
+            'is_list': False,
+            'is_optional': True
         }
     },
     'AugAssign': {
@@ -95,23 +115,45 @@ PY_AST_NODE_FIELDS = {
             'is_optional': False
         }
     },
-    'Print': {
-        'dest': {
+    'AnnAssign': {
+        'target': {
+            'type': ast.expr,
+            'is_list': False,
+            'is_optional': False
+        },
+        'annotation': {
+            'type': ast.expr,
+            'is_list': False,
+            'is_optional': False
+        },
+        'value': {
             'type': ast.expr,
             'is_list': False,
             'is_optional': True
         },
-        'values': {
-            'type': ast.expr,
-            'is_list': True,
-            'is_optional': False
-        },
-        'nl': {
-            'type': bool,
+        'simple': {
+            'type': int,
             'is_list': False,
             'is_optional': False
         }
     },
+    # 'Print': {
+    #     'dest': {
+    #         'type': ast.expr,
+    #         'is_list': False,
+    #         'is_optional': True
+    #     },
+    #     'values': {
+    #         'type': ast.expr,
+    #         'is_list': True,
+    #         'is_optional': False
+    #     },
+    #     'nl': {
+    #         'type': bool,
+    #         'is_list': False,
+    #         'is_optional': False
+    #     }
+    # },
     'For': {
         'target': {
             'type': ast.expr,
@@ -132,6 +174,38 @@ PY_AST_NODE_FIELDS = {
             'type': ast.stmt,
             'is_list': True,
             'is_optional': False
+        },
+        'type_comment': {
+            'type': str,
+            'is_list': False,
+            'is_optional': True
+        }
+    },
+    'AsyncFor': {
+        'target': {
+            'type': ast.expr,
+            'is_list': False,
+            'is_optional': False
+        },
+        'iter': {
+            'type': ast.expr,
+            'is_list': False,
+            'is_optional': False
+        },
+        'body': {
+            'type': ast.stmt,
+            'is_list': True,
+            'is_optional': False
+        },
+        'orelse': {
+            'type': ast.stmt,
+            'is_list': True,
+            'is_optional': False
+        },
+        'type_comment': {
+            'type': str,
+            'is_list': False,
+            'is_optional': True
         }
     },
     'While': {
@@ -169,40 +243,86 @@ PY_AST_NODE_FIELDS = {
         },
     },
     'With': {
-        'context_expr': {
-            'type': ast.expr,
-            'is_list': False,
+        'items': {
+            'type': ast.withitem,
+            'is_list': True,
             'is_optional': False
-        },
-        'optional_vars': {
-            'type': ast.expr,
-            'is_list': False,
-            'is_optional': True
         },
         'body': {
             'type': ast.stmt,
             'is_list': True,
             'is_optional': False
         },
+        'type_comment': {
+            'type': str,
+            'is_list': False,
+            'is_optional': True
+        }
     },
+    'AsyncWith': {
+        'items': {
+            'type': ast.withitem,
+            'is_list': True,
+            'is_optional': False
+        },
+        'body': {
+            'type': ast.stmt,
+            'is_list': True,
+            'is_optional': False
+        },
+        'type_comment': {
+            'type': str,
+            'is_list': False,
+            'is_optional': True
+        }
+    },
+    # 'With': {
+    #     'context_expr': {
+    #         'type': ast.expr,
+    #         'is_list': False,
+    #         'is_optional': False
+    #     },
+    #     'optional_vars': {
+    #         'type': ast.expr,
+    #         'is_list': False,
+    #         'is_optional': True
+    #     },
+    #     'body': {
+    #         'type': ast.stmt,
+    #         'is_list': True,
+    #         'is_optional': False
+    #     },
+    # },
     'Raise': {
-        'type': {
+        'exc': {
             'type': ast.expr,
             'is_list': False,
             'is_optional': True
         },
-        'inst': {
-            'type': ast.expr,
-            'is_list': False,
-            'is_optional': True
-        },
-        'tback': {
+        'cause': {
             'type': ast.expr,
             'is_list': False,
             'is_optional': True
         },
     },
-    'TryExcept': {
+    # 'Raise': {
+    #     'type': {
+    #         'type': ast.expr,
+    #         'is_list': False,
+    #         'is_optional': True
+    #     },
+    #     'inst': {
+    #         'type': ast.expr,
+    #         'is_list': False,
+    #         'is_optional': True
+    #     },
+    #     'tback': {
+    #         'type': ast.expr,
+    #         'is_list': False,
+    #         'is_optional': True
+    #     },
+    # },
+    'Try': {
         'body': {
             'type': ast.stmt,
             'is_list': True,
@@ -218,19 +338,41 @@ PY_AST_NODE_FIELDS = {
             'is_list': True,
             'is_optional': False
         },
-    },
-    'TryFinally': {
-        'body': {
-            'type': ast.stmt,
-            'is_list': True,
-            'is_optional': False
-        },
         'finalbody': {
             'type': ast.stmt,
             'is_list': True,
             'is_optional': False
-        }
+        },
     },
+    # 'TryExcept': {
+    #     'body': {
+    #         'type': ast.stmt,
+    #         'is_list': True,
+    #         'is_optional': False
+    #     },
+    #     'handlers': {
+    #         'type': ast.excepthandler,
+    #         'is_list': True,
+    #         'is_optional': False
+    #     },
+    #     'orelse': {
+    #         'type': ast.stmt,
+    #         'is_list': True,
+    #         'is_optional': False
+    #     },
+    # },
+    # 'TryFinally': {
+    #     'body': {
+    #         'type': ast.stmt,
+    #         'is_list': True,
+    #         'is_optional': False
+    #     },
+    #     'finalbody': {
+    #         'type': ast.stmt,
+    #         'is_list': True,
+    #         'is_optional': False
+    #     }
+    # },
     'Assert': {
         'test': {
             'type': ast.expr,
@@ -267,24 +409,31 @@ PY_AST_NODE_FIELDS = {
             'is_optional': True
         }
     },
-    'Exec': {
-        'body': {
-            'type': ast.expr,
-            'is_list': False,
+    # 'Exec': {
+    #     'body': {
+    #         'type': ast.expr,
+    #         'is_list': False,
+    #         'is_optional': False
+    #     },
+    #     'globals': {
+    #         'type': ast.expr,
+    #         'is_list': False,
+    #         'is_optional': True
+    #     },
+    #     'locals': {
+    #         'type': ast.expr,
+    #         'is_list': False,
+    #         'is_optional': True
+    #     },
+    # },
+    'Global': {
+        'names': {
+            'type': str,
+            'is_list': True,
             'is_optional': False
         },
-        'globals': {
-            'type': ast.expr,
-            'is_list': False,
-            'is_optional': True
-        },
-        'locals': {
-            'type': ast.expr,
-            'is_list': False,
-            'is_optional': True
-        },
     },
-    'Global': {
+    'Nonlocal': {
         'names': {
             'type': str,
             'is_list': True,
@@ -307,6 +456,18 @@ PY_AST_NODE_FIELDS = {
         'values': {
             'type': ast.expr,
             'is_list': True,
+            'is_optional': False
+        },
+    },
+    'NamedExpr': {
+        'target': {
+            'type': ast.expr,
+            'is_list': False,
+            'is_optional': False
+        },
+        'value': {
+            'type': ast.expr,
+            'is_list': False,
             'is_optional': False
         },
     },
@@ -440,11 +601,25 @@ PY_AST_NODE_FIELDS = {
             'is_optional': False
         },
     },
+    'Await': {
+        'value': {
+            'type': ast.expr,
+            'is_list': False,
+            'is_optional': False
+        }
+    },
     'Yield': {
         'value': {
             'type': ast.expr,
             'is_list': False,
             'is_optional': True
+        }
+    },
+    'YieldFrom': {
+        'value': {
+            'type': ast.expr,
+            'is_list': False,
+            'is_optional': False
         }
     },
     'Compare': {
@@ -480,36 +655,72 @@ PY_AST_NODE_FIELDS = {
             'is_list': True,
             'is_optional': False
         },
-        'starargs': {
-            'type': ast.expr,
-            'is_list': False,
-            'is_optional': True
-        },
-        'kwargs': {
-            'type': ast.expr,
-            'is_list': False,
-            'is_optional': True
-        },
+        # 'starargs': {
+        #     'type': ast.expr,
+        #     'is_list': False,
+        #     'is_optional': True
+        # },
+        # 'kwargs': {
+        #     'type': ast.expr,
+        #     'is_list': False,
+        #     'is_optional': True
+        # },
     },
-    'Repr': {
+    'FormattedValue': {
         'value': {
             'type': ast.expr,
             'is_list': False,
             'is_optional': False
+        },
+        'conversion': {
+            'type': int,
+            'is_list': False,
+            'is_optional': True
+        },
+        'format_spec': {
+            'type': ast.expr,
+            'is_list': False,
+            'is_optional': True
         }
     },
-    'Num': {
-        'n': {
-            'type': object,  #FIXME: should be float or int?
-            'is_list': False,
+    'JoinedStr': {
+        'values': {
+            'type': ast.expr,
+            'is_list': True,
             'is_optional': False
         }
     },
-    'Str': {
-        's': {
+    # 'Repr': {
+    #     'value': {
+    #         'type': ast.expr,
+    #         'is_list': False,
+    #         'is_optional': False
+    #     }
+    # },
+    # 'Num': {
+    #     'n': {
+    #         'type': object,  #FIXME: should be float or int?
+    #         'is_list': False,
+    #         'is_optional': False
+    #     }
+    # },
+    # 'Str': {
+    #     's': {
+    #         'type': str,
+    #         'is_list': False,
+    #         'is_optional': False
+    #     }
+    # },
+    'Constant': {
+        'value': {
+            'type': ast.Constant,
+            'is_list': False,
+            'is_optional': False
+        },
+        'kind': {
             'type': str,
             'is_list': False,
-            'is_optional': False
+            'is_optional': True
         }
     },
     'Attribute': {
@@ -540,10 +751,32 @@ PY_AST_NODE_FIELDS = {
             'is_list': False,
             'is_optional': False
         },
+        'ctx': {
+            'type': ast.expr_context,
+            'is_list': False,
+            'is_optional': False
+        },
+    },
+    'Starred': {
+        'value': {
+            'type': ast.expr,
+            'is_list': False,
+            'is_optional': False
+        },
+        'ctx': {
+            'type': ast.expr_context,
+            'is_list': False,
+            'is_optional': False
+        },
     },
     'Name': {
         'id': {
             'type': str,
+            'is_list': False,
+            'is_optional': False
+        },
+        'ctx': {
+            'type': ast.expr_context,
             'is_list': False,
             'is_optional': False
         }
@@ -590,18 +823,33 @@ PY_AST_NODE_FIELDS = {
         }
     },
     'arguments': {
+        'posonlyargs': {
+            'type': ast.arg,
+            'is_list': True,
+            'is_optional': False
+        },
         'args': {
-            'type': ast.expr,
+            'type': ast.arg,
             'is_list': True,
             'is_optional': False
         },
         'vararg': {
-            'type': str,
+            'type': ast.arg,
             'is_list': False,
             'is_optional': True
         },
+        'kwonlyargs': {
+            'type': ast.arg,
+            'is_list': True,
+            'is_optional': False
+        },
+        'kw_defaults': {
+            'type': ast.arg,
+            'is_list': True,
+            'is_optional': False
+        },
         'kwarg': {
-            'type': str,
+            'type': ast.arg,
             'is_list': False,
             'is_optional': True
         },
@@ -625,6 +873,11 @@ PY_AST_NODE_FIELDS = {
         'ifs': {
             'type': ast.expr,
             'is_list': True,
+            'is_optional': False
+        },
+        'is_async': {
+            'type': int,
+            'is_list': False,
             'is_optional': False
         },
     },

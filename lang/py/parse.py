@@ -85,6 +85,7 @@ def parse_tree_to_python_ast(tree):
     ast_node = node_type()
     node_type_name = typename(node_type)
 
+    fields_info = None
     # if it's a compositional AST node, populate its children nodes,
     # fill fields with empty(default) values otherwise
     if node_type_name in PY_AST_NODE_FIELDS:
@@ -132,7 +133,7 @@ def parse_tree_to_python_ast(tree):
 
     for field in ast_node._fields:
         if not hasattr(ast_node, field) and not field in NODE_FIELD_BLACK_LIST:
-            if fields_info and fields_info[field]['is_list'] and not fields_info[field]['is_optional']:
+            if fields_info is not None and fields_info[field]['is_list'] and not fields_info[field]['is_optional']:
                 setattr(ast_node, field, list())
             else:
                 setattr(ast_node, field, None)
